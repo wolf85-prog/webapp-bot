@@ -9,7 +9,7 @@ const bot = new TelegramBot(token, {polling: true});
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+//app.use(cors());
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -48,6 +48,12 @@ bot.on('message', async (msg) => {
             console.log(e);
         }
     }
+});
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type, X-Requested-With");
+    next();
 });
 
 app.post('/web-data', async (req, res) => {
