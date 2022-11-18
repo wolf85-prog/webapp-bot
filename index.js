@@ -103,6 +103,28 @@ app.post("/api/users", function (req, res) {
     res.send(user);
 });
 
+app.get("/api/users/:id", function(req, res){
+
+    const id = req.params.id; // получаем id
+    const content = fs.readFileSync(filePath, "utf8");
+    const users = JSON.parse(content);
+    let user = null;
+    // находим в массиве пользователя по id
+    for(var i=0; i<users.length; i++){
+        if(users[i].id==id){
+            user = users[i];
+            break;
+        }
+    }
+    // отправляем пользователя
+    if(user){
+        res.send(user);
+    }
+    else{
+        res.status(404).send();
+    }
+});
+
 
 const PORT = 8000;
 
