@@ -1,6 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
 
 const token = '5777515698:AAH4hktaBnP-2kdJZ8lTJvBKdvRdQyTlCg0'
 const webAppUrl = 'https://eclectic-heliotrope-d3f5f5.netlify.app';
@@ -66,6 +67,17 @@ app.post('/web-data', async (req, res) => {
         return res.status(500).json({})
     }
 })
+
+
+app.use(express.static(__dirname + "/"));
+
+const filePath = "users.json";
+app.get("/api/users", function(req, res){
+
+    const content = fs.readFileSync(filePath,"utf8");
+    const users = JSON.parse(content);
+    res.send(users);
+});
 
 const PORT = 8000;
 
