@@ -79,6 +79,30 @@ app.get("/api/users", function(req, res){
     res.send(users);
 });
 
+// получение отправленных данных
+app.post("/api/users", function (req, res) {
+
+    if(!req.body) return res.sendStatus(400);
+
+    const userName = req.body.name;
+    const userAge = req.body.age;
+    let user = {name: userName, age: userAge};
+
+    let data = fs.readFileSync(filePath, "utf8");
+    let users = JSON.parse(data);
+
+    // находим максимальный id
+    const id = Math.max.apply(Math,users.map(function(o){return o.id;}))
+    // увеличиваем его на единицу
+    user.id = id+1;
+    // добавляем пользователя в массив
+    users.push(user);
+    data = JSON.stringify(users);
+    // перезаписываем файл с новыми данными
+    fs.writeFileSync("users.json", data);
+    res.send(user);
+});
+
 
 const PORT = 8000;
 
