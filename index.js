@@ -69,7 +69,7 @@ app.post('/web-data', async (req, res) => {
 })
 
 
-app.use(express.static(__dirname + "/"));
+app.use(express.static(__dirname + "/webapp-bot"));
 
 const filePath = "users.json";
 app.get("/api/users", function(req, res){
