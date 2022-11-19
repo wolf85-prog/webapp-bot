@@ -12,9 +12,7 @@ const bot = new TelegramBot(token, {polling: true});
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-    origin: 'https://eclectic-heliotrope-d3f5f5.netlify.app'
-}));
+app.use(cors());
 
 https
     .createServer(
@@ -90,6 +88,12 @@ app.post('/web-data', async (req, res) => {
 
 
 app.use(express.static(__dirname + "/"));
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+    next();
+});
 
 const filePath = "users.json";
 app.get("/api/users", function(req, res){
