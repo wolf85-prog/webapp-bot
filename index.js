@@ -12,7 +12,9 @@ const bot = new TelegramBot(token, {polling: true});
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'https://eclectic-heliotrope-d3f5f5.netlify.app'
+}));
 
 https
     .createServer(
