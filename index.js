@@ -128,4 +128,4 @@ app.get("/api/users/:id", function(req, res){
 
 const PORT = 8000;
 
-app.listen(PORT, () => console.log('server started on PORT ' + PORT))
+app.listen(PORT, () => console.log('server webapp-bot started on PORT ' + PORT))
