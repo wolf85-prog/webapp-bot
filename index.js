@@ -65,6 +65,10 @@ bot.on('message', async (msg) => {
     }
 });
 
+app.get('/', (req,res)=>{
+    res.send("Hello from express server.")
+})
+
 app.post('/web-data', async (req, res) => {
     const {queryId, products = [], totalPrice} = req.body;
     try {
@@ -143,8 +147,3 @@ app.get("/api/users/:id", function(req, res){
 // const PORT = 8000;
 //
 // app.listen(PORT, () => console.log('server webapp-bot started on PORT ' + PORT))
-
-
-app.get('/', (req,res)=>{
-    res.send("Hello from express server.")
-})
