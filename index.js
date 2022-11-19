@@ -2,15 +2,29 @@ const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const https = require("https");
 
 const token = '5777515698:AAH4hktaBnP-2kdJZ8lTJvBKdvRdQyTlCg0'
 const webAppUrl = 'https://eclectic-heliotrope-d3f5f5.netlify.app';
 
 const bot = new TelegramBot(token, {polling: true});
+
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+https
+    .createServer(
+        {
+            key: fs.readFileSync('/etc/ssl/private/apache-selfsigned.key'),
+            cert: fs.readFileSync('/etc/ssl/certs/apache-selfsigned.crt'),
+        },
+        app
+    )
+    .listen(8000, ()=>{
+        console.log('server webapp-bot started on PORT - 8000')
+    });
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -126,6 +140,11 @@ app.get("/api/users/:id", function(req, res){
 });
 
 
-const PORT = 8000;
+// const PORT = 8000;
+//
+// app.listen(PORT, () => console.log('server webapp-bot started on PORT ' + PORT))
 
-app.listen(PORT, () => console.log('server webapp-bot started on PORT ' + PORT))
+
+app.get('/', (req,res)=>{
+    res.send("Hello from express server.")
+})
