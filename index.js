@@ -12,21 +12,19 @@ const bot = new TelegramBot(token, {polling: true});
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-    origin: '*'
-}));
+app.use(cors());
 
-https
-    .createServer(
-        {
-            key: fs.readFileSync('/etc/ssl/private/apache-selfsigned.key'),
-            cert: fs.readFileSync('/etc/ssl/certs/apache-selfsigned.crt'),
-        },
-        app
-    )
-    .listen(8000, ()=>{
-        console.log('server webapp-bot started on PORT - 8000')
-    });
+// https
+//     .createServer(
+//         {
+//             key: fs.readFileSync('/etc/ssl/private/apache-selfsigned.key'),
+//             cert: fs.readFileSync('/etc/ssl/certs/apache-selfsigned.crt'),
+//         },
+//         app
+//     )
+//     .listen(8000, ()=>{
+//         console.log('server webapp-bot started on PORT - 8000')
+//     });
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -70,6 +68,11 @@ bot.on('message', async (msg) => {
 app.get('/', (req,res)=>{
     res.send("Hello from express server.")
 })
+
+app.get('/secret',(req, res) => {
+    const secret =  Math.floor(Math.random()*100)
+    res.json({secret})
+});
 
 app.post('/web-data', async (req, res) => {
     const {queryId, products = [], totalPrice} = req.body;
@@ -154,6 +157,6 @@ app.get("/api/users/:id", function(req, res){
 });
 
 
-// const PORT = 8000;
-//
-// app.listen(PORT, () => console.log('server webapp-bot started on PORT ' + PORT))
+const PORT = 8000;
+
+app.listen(PORT, () => console.log('server webapp-bot started on PORT ' + PORT))
