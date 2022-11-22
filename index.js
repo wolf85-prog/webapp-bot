@@ -14,17 +14,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// https
-//     .createServer(
-//         {
-//             key: fs.readFileSync('/etc/ssl/private/apache-selfsigned.key'),
-//             cert: fs.readFileSync('/etc/ssl/certs/apache-selfsigned.crt'),
-//         },
-//         app
-//     )
-//     .listen(8000, ()=>{
-//         console.log('server webapp-bot started on PORT - 8000')
-//     });
+https
+    .createServer(
+        {
+            key: fs.readFileSync('/etc/ssl/private/apache-selfsigned.key'),
+            cert: fs.readFileSync('/etc/ssl/certs/apache-selfsigned.crt'),
+        },
+        app
+    )
+    .listen(8000, ()=>{
+        console.log('server webapp-bot started on PORT - 8000')
+    });
 
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
@@ -157,6 +157,6 @@ app.get("/api/users/:id", function(req, res){
 });
 
 
-const PORT = 8000;
-
-app.listen(PORT, () => console.log('server webapp-bot started on PORT ' + PORT))
+// const PORT = 8000;
+//
+// app.listen(PORT, () => console.log('server webapp-bot started on PORT ' + PORT))
